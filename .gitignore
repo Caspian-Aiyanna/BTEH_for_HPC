@@ -1,0 +1,27 @@
+# Logs and outputs
+logs/*
+!logs/.gitkeep
+
+# Large results and intermediates
+results/
+data/envi/raw/
+
+# R temporary / local files
+.Rhistory
+.RData
+.Rproj.user/
+.Rprofile
+.Ruserdata
+
+# renv cache
+renv/library/
+renv/staging/
+
+# HPC artifacts
+*.out
+*.err
+*.slurm
+
+# OS/system files
+.DS_Store
+Thumbs.db
