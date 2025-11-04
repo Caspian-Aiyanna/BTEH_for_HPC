@@ -33,15 +33,25 @@ source(file.path(.root, "R", "utils_repro.R"))
 source(file.path(.root, "R", "utils_kendall.R"))
 source(file.path(.root, "R", "utils_h2o.R"))
 
+`%||%` <- get0("%||%", ifnotfound = function(a, b) if (is.null(a)) b else a)  # safety if not in utils
+
 # --- CLI ---
 opt <- list(
-  make_option(c("--run"),              type = "character", default = "B",   help = "Run tag: A or B"),
+  make_option(c("--run"),              type = "character", default = "A",   help = "Run tag: A or B [default: %default]"),
   make_option(c("--mode"),             type = "character", default = NULL,  help = "REPRO or FAST (overrides config.yml)"),
   make_option(c("--species"),          type = "character", default = NULL,  help = "Optional single species (e.g., E3A)"),
   make_option(c("--max_models"),       type = "integer",   default = NULL,  help = "Override AutoML max_models"),
   make_option(c("--max_runtime_secs"), type = "integer",   default = NULL,  help = "Optional AutoML time budget (seconds)")
 )
 opts <- parse_args(OptionParser(option_list = opt))
+
+# --- normalize & validate --run so downstream never guesses B ---
+opts$run <- toupper({
+  x <- opts$run
+  if (is.null(x) || is.na(x) || !nzchar(x)) "A" else x
+})
+if (!opts$run %in% c("A","B")) stop("`--run` must be A or B (got: ", opts$run, ")")
+if (identical(opts$run, "A")) message("[run=A] Defaulting to AFTER (A). To use BEFORE, pass --run B.")
 
 cfg <- read_config()
 if (!is.null(opts$mode)) cfg$mode <- toupper(opts$mode)
@@ -52,19 +62,21 @@ occ_dir   <- cfg$paths$occ %||% file.path("data", "occ", "thinned_DBSCAN")
 res_root  <- cfg$paths$results_h2o %||% file.path("results", "H2O")
 plans_dir <- cfg$paths$plans       %||% "plans"
 logs_dir  <- cfg$paths$logs        %||% "logs"
-logf      <- file.path(logs_dir, sprintf("03_h2o_train_%s.log", opts$run))
-
 dir_ensure(res_root); dir_ensure(plans_dir); dir_ensure(logs_dir)
+
+logf <- file.path(logs_dir, sprintf("03_h2o_train_%s.log", opts$run))
 log_line(sprintf("Starting 03_h2o_train.R  (mode=%s, run=%s)", mode, opts$run), logf)
 
-# --- choose raster dir by run tag ---
-if (toupper(opts$run) == "A") {
-  env_dir <- cfg$paths$envi_after %||% file.path("data","envi","A")
+# --- choose raster dir by run tag (no silent fallbacks) ---
+env_dir <- if (opts$run == "A") {
+  cfg$paths$envi_after %||% file.path("data","envi","A")
 } else {
-  env_dir <- cfg$paths$envi_before %||% file.path("data","envi","B")
+  cfg$paths$envi_before %||% file.path("data","envi","B")
 }
-ras_files <- list.files(env_dir, pattern = "\\.tif$", full.names = TRUE)
-stopifnot(length(ras_files) > 0)
+if (!dir.exists(env_dir)) stop("Env dir not found for run=", opts$run, ": ", env_dir)
+ras_files <- list.files(env_dir, pattern="\\.tif$", full.names=TRUE)
+if (length(ras_files) == 0L) stop("No .tif in ", env_dir, " (run=", opts$run, ")")
+
 ras_names <- make.names(tools::file_path_sans_ext(basename(ras_files)), unique = TRUE)
 Renv <- terra::rast(ras_files); names(Renv) <- ras_names
 
@@ -74,23 +86,21 @@ if (file.exists(keepvars_csv)) {
   keep_vars <- readr::read_csv(keepvars_csv, show_col_types = FALSE)$variable
   log_line(sprintf("Read keepvars: %d variables", length(keep_vars)), logf)
 } else {
-  keep_vars <- kendall_plan(opts$run, Renv,
-                            out_dir = file.path(plans_dir, opts$run),
-                            cutoff   = cfg$kendall$cutoff %||% 0.8,
-                            nsample  = cfg$kendall$sample %||% 5000L)
+  dir_ensure(file.path(plans_dir, opts$run))
+  keep_vars <- kendall_plan(
+    run_tag  = opts$run,
+    Renv     = Renv,
+    out_dir  = file.path(plans_dir, opts$run),
+    cutoff   = cfg$kendall$cutoff %||% 0.8,
+    nsample  = cfg$kendall$sample %||% 5000L
+  )
   log_line(sprintf("Created keepvars: %d variables", length(keep_vars)), logf)
 }
 Renv <- Renv[[keep_vars]]
 
 # --- H2O init with proper threads ---
-threads <- init_h2o(cfg)  # utils_h2o.R: no h2o.setSeed (OK for H2O 3.46+)
+threads <- init_h2o(cfg)  # from utils_h2o.R
 log_line(sprintf("H2O threads: %d", threads), logf)
-
-# --- species list ---
-occ_files <- list.files(occ_dir, pattern = "\\.csv$", full.names = TRUE)
-stopifnot(length(occ_files) > 0)
-sp_list <- sort(tools::file_path_sans_ext(basename(occ_files)))
-if (!is.null(opts$species)) sp_list <- intersect(sp_list, opts$species)
 
 # --- AutoML settings from config ---
 auto_seed <- cfg$h2o$seed %||% 123L
@@ -104,7 +114,7 @@ if (toupper(cfg$mode) == "REPRO") {
   }
   max_models    <- opts$max_models %||% cfg$h2o$automl$max_models_fast %||% 60L
 }
-max_runtime_secs <- opts$max_runtime_secs %||% 120L  # default small budget for smoke tests
+max_runtime_secs <- opts$max_runtime_secs %||% 120L  # small default budget for smoke tests
 
 # --- deterministic fold generator (spatial blocks) ---
 make_spatial_folds <- function(df, block_km = 2.5, k = 5L) {
@@ -130,9 +140,23 @@ drop_nzv <- function(df, cols) {
   cols[keep]
 }
 
+# --- species list ---
+occ_files <- list.files(occ_dir, pattern = "\\.csv$", full.names = TRUE)
+stopifnot(length(occ_files) > 0)
+sp_list <- sort(tools::file_path_sans_ext(basename(occ_files)))
+if (!is.null(opts$species)) {
+  sp_list <- intersect(sp_list, opts$species)
+  if (length(sp_list) == 0L) stop("Requested --species not found in ", occ_dir, ": ", opts$species)
+}
+log_line(sprintf("Species to run (%d): %s", length(sp_list), paste(sp_list, collapse = ", ")), logf)
+
+# ------------------ main loop ------------------
 for (sp in sp_list) {
   sp_csv <- file.path(occ_dir, paste0(sp, ".csv"))
-  if (!file.exists(sp_csv)) next
+  if (!file.exists(sp_csv)) {
+    log_line(sprintf("Skip %s — CSV missing: %s", sp, sp_csv), logf)
+    next
+  }
 
   out_dir <- file.path(res_root, opts$run, sp)
   dir_ensure(out_dir)
@@ -145,6 +169,7 @@ for (sp in sp_list) {
 
   log_line(sprintf("Training %s", sp), logf)
 
+  # ---- per-species body ----
   sp_df <- readr::read_csv(sp_csv, show_col_types = FALSE)
   stopifnot(all(c("lon","lat") %in% names(sp_df)))
 
@@ -212,7 +237,6 @@ for (sp in sp_list) {
 
   leader <- NULL
   if (!is.null(aml)) {
-    # check leaderboard is non-empty
     lb <- tryCatch(as.data.frame(aml@leaderboard), error = function(e) NULL)
     if (!is.null(lb) && nrow(lb) > 0) {
       leader <- aml@leader
@@ -238,7 +262,7 @@ for (sp in sp_list) {
   }
 
   # Save leader model + info
-  model_dir <- h2o.saveModel(leader, path = out_dir, force = TRUE)
+  h2o.saveModel(leader, path = out_dir, force = TRUE)
   writeLines(c(
     paste0("leader_id=", leader@model_id),
     paste0("n_vars=", length(x_vars)),
@@ -261,25 +285,19 @@ for (sp in sp_list) {
   if (!is.null(varimp) && nrow(varimp) > 0) {
     readr::write_csv(varimp, file.path(out_dir, sprintf("varimp_%s.csv", sp)))
     suppressWarnings({
-      pdf(file.path(out_dir, sprintf("varimp_%s.pdf", sp)));
-      print(h2o.varimp_plot(leader, num_of_features = 10));
-      dev.off()
+      pdf(file.path(out_dir, sprintf("varimp_%s.pdf", sp))); print(h2o.varimp_plot(leader, num_of_features = 10)); dev.off()
     })
   }
 
   # Partial dependence for first few variables
   pp_vars <- head(x_vars, 5)
   suppressWarnings({
-    pdf(file.path(out_dir, sprintf("partial_%s.pdf", sp)));
-    print(h2o.partialPlot(object = leader, data = hf, cols = pp_vars));
-    dev.off()
+    pdf(file.path(out_dir, sprintf("partial_%s.pdf", sp))); print(h2o.partialPlot(object = leader, data = hf, cols = pp_vars)); dev.off()
   })
 
   # Raster prediction (chunked)
   pred_r <- predict_raster_h2o(Renv[[x_vars]], leader, block_rows = 50000)
-  terra::writeRaster(pred_r,
-                     filename = file.path(out_dir, sprintf("prediction_%s.tif", sp)),
-                     overwrite = TRUE)
+  terra::writeRaster(pred_r, filename = file.path(out_dir, sprintf("prediction_%s.tif", sp)), overwrite = TRUE)
 
   log_line(sprintf("Done %s", sp), logf)
 }

@@ -46,3 +46,9 @@
 [2025-10-29 16:20:54] Training E4B
 [2025-10-29 16:30:20] Done E4B
 [2025-10-29 16:30:20] Training E5A
+[2025-10-30 00:09:52] Starting 03_h2o_train.R  (mode=FAST, run=B)
+[2025-10-30 00:09:55] Read keepvars: 21 variables
+[2025-10-30 00:10:09] H2O threads: 6
+[2025-10-30 00:10:09] Species to run (1): E5A
+[2025-10-30 00:10:09] Skip E5A — outputs present
+[2025-10-30 00:10:09] All species finished.

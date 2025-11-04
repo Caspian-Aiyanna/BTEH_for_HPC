@@ -1,0 +1,12 @@
+[2025-10-30 21:32:24] Starting 05_h2o_ssdm_ssf_results.R (mode=FAST, run=A, q=0.75)
+[2025-10-30 21:32:24] Species considered (3-way): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-30 21:32:24] Skip E1B — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Skip E2B — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Skip E3A — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Skip E3B — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Skip E4A — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Skip E4B — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Skip E5A — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Skip E5B — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Skip E6B — missing replicate rasters in H2O or SSDM.
+[2025-10-30 21:32:24] Wrote per-replicate metrics (long): results/compare/A/02_tables/per_rep_metrics_long.csv

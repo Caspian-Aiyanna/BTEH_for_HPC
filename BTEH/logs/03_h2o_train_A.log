@@ -8,3 +8,49 @@
 [2025-10-28 16:53:58] Training E6B
 [2025-10-28 17:02:02] Done E6B
 [2025-10-28 17:02:02] All species finished.
+[2025-10-29 20:16:52] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 20:16:55] Read keepvars: 21 variables
+[2025-10-29 20:17:10] H2O threads: 6
+[2025-10-29 20:17:10] Training E1B
+[2025-10-29 20:36:14] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 20:39:26] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 20:41:14] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 20:51:43] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 20:56:10] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 21:08:06] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 21:08:08] Read keepvars: 21 variables
+[2025-10-29 21:08:29] H2O threads: 6
+[2025-10-29 21:08:29] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-29 21:08:29] Training E1B
+[2025-10-29 21:18:39] Done E1B
+[2025-10-29 21:18:39] Training E2B
+[2025-10-29 21:28:04] Done E2B
+[2025-10-29 21:28:04] Training E3A
+[2025-10-29 21:37:55] Done E3A
+[2025-10-29 21:37:55] Training E3B
+[2025-10-29 21:47:16] Done E3B
+[2025-10-29 21:47:16] Training E4A
+[2025-10-29 21:57:00] Done E4A
+[2025-10-29 21:57:00] Training E4B
+[2025-10-29 22:06:15] Done E4B
+[2025-10-29 22:06:15] Training E5A
+[2025-10-29 23:38:59] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 23:38:59] Read keepvars: 21 variables
+[2025-10-29 23:39:14] H2O threads: 6
+[2025-10-29 23:39:14] Species to run (1): E5B
+[2025-10-29 23:39:14] Training E5B
+[2025-10-29 23:48:42] Done E5B
+[2025-10-29 23:48:42] All species finished.
+[2025-10-29 23:58:44] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-29 23:58:45] Read keepvars: 21 variables
+[2025-10-29 23:59:03] H2O threads: 6
+[2025-10-29 23:59:03] Species to run (1): E6B
+[2025-10-29 23:59:03] Training E6B
+[2025-10-30 00:08:07] Done E6B
+[2025-10-30 00:08:07] All species finished.
+[2025-10-30 00:45:13] Starting 03_h2o_train.R  (mode=FAST, run=A)
+[2025-10-30 00:45:15] Read keepvars: 21 variables
+[2025-10-30 00:45:29] H2O threads: 6
+[2025-10-30 00:45:29] Species to run (1): E5A
+[2025-10-30 00:45:29] Skip E5A — outputs present
+[2025-10-30 00:45:29] All species finished.

@@ -1,0 +1,9 @@
+[2025-10-30 18:47:08] Starting 05_h2o_vs_ssdm_results.R (mode=FAST, run=B, q=0.75)
+[2025-10-30 18:47:08] Species considered (replicate outputs only): E1B, E2B, E3B, E4B, E5B, E6B
+[2025-10-30 18:47:08] Skip E1B — no replicate overlap between H2O and SSDM.
+[2025-10-30 18:47:08] Skip E2B — no replicate overlap between H2O and SSDM.
+[2025-10-30 18:47:08] Skip E3B — no replicate overlap between H2O and SSDM.
+[2025-10-30 18:47:08] Skip E4B — no replicate overlap between H2O and SSDM.
+[2025-10-30 18:47:08] Skip E5B — no replicate overlap between H2O and SSDM.
+[2025-10-30 18:47:08] Skip E6B — no replicate overlap between H2O and SSDM.
+[2025-10-30 18:47:08] Wrote per-replicate metrics: results/compare/B/02_tables/per_rep_metrics.csv

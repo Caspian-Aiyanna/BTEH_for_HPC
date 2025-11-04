@@ -309,3 +309,47 @@
 [2025-10-29 16:44:39] Thinning summary saved: D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/results/compare/thin_summary.csv
 [2025-10-29 16:44:39] Totals saved: logs/thin_totals_B.csv
 [2025-10-29 16:44:42] DONE. Total RAW: 162175 | CLEAN: 161288 | main kept: 14522 | unc reps kept: [14522, 14522, 14522]
+[2025-10-31 11:41:46] Starting 02_dbscan_thin.R (mode=FAST)
+[2025-10-31 11:41:46] Run: B | eps_deg: 0.004 | minPts: 15 | fraction: 0.09 | min_samples: 4
+[2025-10-31 11:41:46] Input: data/clean | MAIN out: D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN | UNCERTAINTY (replicates) out: D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN
+[2025-10-31 11:41:46] Recorded params in: plans/dbscan_params.yml
+[2025-10-31 11:41:47] MAIN  E1B: raw=12364 | clean=12292 -> kept=1106 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E1B.csv)
+[2025-10-31 11:41:47] UNC1 E1B: raw=12364 | clean=12292 -> kept=1106 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E1B_rep1.csv)
+[2025-10-31 11:41:48] UNC2 E1B: raw=12364 | clean=12292 -> kept=1106 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E1B_rep2.csv)
+[2025-10-31 11:41:48] UNC3 E1B: raw=12364 | clean=12292 -> kept=1106 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E1B_rep3.csv)
+[2025-10-31 11:41:48] MAIN  E2B: raw=10364 | clean=10289 -> kept=927 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E2B.csv)
+[2025-10-31 11:41:48] UNC1 E2B: raw=10364 | clean=10289 -> kept=927 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E2B_rep1.csv)
+[2025-10-31 11:41:49] UNC2 E2B: raw=10364 | clean=10289 -> kept=927 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E2B_rep2.csv)
+[2025-10-31 11:41:49] UNC3 E2B: raw=10364 | clean=10289 -> kept=927 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E2B_rep3.csv)
+[2025-10-31 11:41:49] MAIN  E3A: raw=25091 | clean=24941 -> kept=2246 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E3A.csv)
+[2025-10-31 11:41:50] UNC1 E3A: raw=25091 | clean=24941 -> kept=2246 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E3A_rep1.csv)
+[2025-10-31 11:41:50] UNC2 E3A: raw=25091 | clean=24941 -> kept=2246 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E3A_rep2.csv)
+[2025-10-31 11:41:50] UNC3 E3A: raw=25091 | clean=24941 -> kept=2246 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E3A_rep3.csv)
+[2025-10-31 11:41:51] MAIN  E3B: raw=23816 | clean=23643 -> kept=2128 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E3B.csv)
+[2025-10-31 11:41:52] UNC1 E3B: raw=23816 | clean=23643 -> kept=2128 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E3B_rep1.csv)
+[2025-10-31 11:41:53] UNC2 E3B: raw=23816 | clean=23643 -> kept=2128 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E3B_rep2.csv)
+[2025-10-31 11:41:55] UNC3 E3B: raw=23816 | clean=23643 -> kept=2128 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E3B_rep3.csv)
+[2025-10-31 11:41:55] MAIN  E4A: raw=24999 | clean=24913 -> kept=2244 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E4A.csv)
+[2025-10-31 11:41:55] UNC1 E4A: raw=24999 | clean=24913 -> kept=2244 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E4A_rep1.csv)
+[2025-10-31 11:41:56] UNC2 E4A: raw=24999 | clean=24913 -> kept=2244 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E4A_rep2.csv)
+[2025-10-31 11:41:56] UNC3 E4A: raw=24999 | clean=24913 -> kept=2244 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E4A_rep3.csv)
+[2025-10-31 11:41:57] MAIN  E4B: raw=23808 | clean=23702 -> kept=2133 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E4B.csv)
+[2025-10-31 11:41:57] UNC1 E4B: raw=23808 | clean=23702 -> kept=2133 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E4B_rep1.csv)
+[2025-10-31 11:41:58] UNC2 E4B: raw=23808 | clean=23702 -> kept=2133 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E4B_rep2.csv)
+[2025-10-31 11:41:58] UNC3 E4B: raw=23808 | clean=23702 -> kept=2133 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E4B_rep3.csv)
+[2025-10-31 11:41:59] MAIN  E5A: raw=1845 | clean=1844 -> kept=166 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E5A.csv)
+[2025-10-31 11:41:59] UNC1 E5A: raw=1845 | clean=1844 -> kept=166 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E5A_rep1.csv)
+[2025-10-31 11:41:59] UNC2 E5A: raw=1845 | clean=1844 -> kept=166 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E5A_rep2.csv)
+[2025-10-31 11:41:59] UNC3 E5A: raw=1845 | clean=1844 -> kept=166 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E5A_rep3.csv)
+[2025-10-31 11:41:59] MAIN  E5B: raw=18629 | clean=18542 -> kept=1671 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E5B.csv)
+[2025-10-31 11:42:00] UNC1 E5B: raw=18629 | clean=18542 -> kept=1671 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E5B_rep1.csv)
+[2025-10-31 11:42:00] UNC2 E5B: raw=18629 | clean=18542 -> kept=1671 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E5B_rep2.csv)
+[2025-10-31 11:42:00] UNC3 E5B: raw=18629 | clean=18542 -> kept=1671 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E5B_rep3.csv)
+[2025-10-31 11:42:01] MAIN  E6B: raw=21259 | clean=21122 -> kept=1901 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/data/occ/thinned_DBSCAN/E6B.csv)
+[2025-10-31 11:42:01] UNC1 E6B: raw=21259 | clean=21122 -> kept=1901 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E6B_rep1.csv)
+[2025-10-31 11:42:01] UNC2 E6B: raw=21259 | clean=21122 -> kept=1901 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E6B_rep2.csv)
+[2025-10-31 11:42:02] UNC3 E6B: raw=21259 | clean=21122 -> kept=1901 (saved D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN/E6B_rep3.csv)
+[2025-10-31 11:42:02] Cleaning diagnostics saved: logs/cleaning_diagnostics_B.csv
+[2025-10-31 11:42:02] Thinning summary saved: D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/results/compare/thin_summary.csv
+[2025-10-31 11:42:02] Totals saved: logs/thin_totals_B.csv
+[2025-10-31 11:42:02] DONE. Total RAW: 162175 | CLEAN: 161288 | main kept: 14522 | unc reps kept: [14522, 14522, 14522]

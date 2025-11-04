@@ -2,3 +2,87 @@
 [2025-10-28 16:53:03] SSDM cores=5, replications=10
 [2025-10-28 16:53:03] Read keepvars: 21 variables
 [2025-10-28 16:53:03] All species finished.
+[2025-10-30 00:46:25] Starting 04_ssdm_train.R  (mode=FAST, run=A)
+[2025-10-30 00:46:25] Read keepvars: 21 variables
+[2025-10-30 00:46:25] SSDM cores: REPRO=1, FAST=4; replications=10
+[2025-10-30 00:46:25] Species to run (1): E5A
+[2025-10-30 00:46:25] Training E5A
+[2025-10-30 00:46:27] Training ESDM E5A (FAST: cores=2, rep=10)
+[2025-10-30 00:48:56] Starting 04_ssdm_train.R  (mode=FAST, run=A)
+[2025-10-30 00:48:56] Read keepvars: 21 variables
+[2025-10-30 00:48:56] SSDM cores: REPRO=1, FAST=4; replications=10
+[2025-10-30 00:48:56] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-30 00:48:56] Training E1B
+[2025-10-30 00:48:57] Training ESDM E1B (FAST: cores=4, rep=10)
+[2025-10-30 00:53:38] Starting 04_ssdm_train.R  (mode=FAST, run=A)
+[2025-10-30 00:53:38] Read keepvars: 21 variables
+[2025-10-30 00:53:38] SSDM cores: REPRO=1, FAST=4; replications=10
+[2025-10-30 00:53:38] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-30 00:53:38] Training E1B
+[2025-10-30 00:53:40] Training ESDM E1B (FAST: cores=4, rep=10)
+[2025-10-30 00:54:01] ensemble_modelling() error for E1B: one node produced an error: Error : std::bad_alloc
+
+[2025-10-30 00:54:59] Starting 04_ssdm_train.R  (mode=FAST, run=A)
+[2025-10-30 00:54:59] Read keepvars: 21 variables
+[2025-10-30 00:54:59] SSDM cores: REPRO=1, FAST=4; replications=10
+[2025-10-30 00:54:59] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-30 00:54:59] Training E1B
+[2025-10-30 00:55:03] Training ESDM E1B (FAST: cores=4, rep=10)
+[2025-10-30 00:55:25] ensemble_modelling() error for E1B: worker initialization failed: package or namespace load failed for 'SSDM' in inDL(x, as.logical(local), as.logical(now), ...):
+ unable to load shared object 'D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/renv/library/windows/R-4.5/x86_64-w64-mingw32/fields/libs/x64/fields.dll':
+  LoadLibrary failure:  The paging file is too small for this operation to complete.
+
+[2025-10-30 00:57:05] Starting 04_ssdm_train.R  (mode=FAST, run=A)
+[2025-10-30 00:57:05] Read keepvars: 21 variables
+[2025-10-30 00:57:06] SSDM cores: REPRO=1, FAST=4; replications=10
+[2025-10-30 00:57:06] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-30 00:57:06] Training E1B
+[2025-10-30 00:57:09] Training ESDM E1B (FAST: cores=4, rep=10)
+[2025-10-30 01:03:32] ensemble_modelling() error for E1B: one node produced an error: Error : std::bad_alloc
+
+[2025-10-30 01:09:21] Starting 04_ssdm_train.R  (mode=FAST, run=A)
+[2025-10-30 01:09:21] Read keepvars: 21 variables
+[2025-10-30 01:09:21] SSDM cores: REPRO=1, FAST=2; replications=10
+[2025-10-30 01:09:21] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-30 01:09:21] Training E1B
+[2025-10-30 01:09:25] Training ESDM E1B (FAST: cores=2, rep=10)
+[2025-10-30 01:09:41] ensemble_modelling() error for E1B: error reading from connection
+[2025-10-30 01:10:59] Starting 04_ssdm_train.R  (mode=REPRO, run=A)
+[2025-10-30 01:11:00] Read keepvars: 21 variables
+[2025-10-30 01:11:00] SSDM cores: REPRO=1, FAST=2; replications=10
+[2025-10-30 01:11:00] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-30 01:11:00] Training E1B
+[2025-10-30 01:11:00] Training ESDM E1B (REPRO: cores=1, rep=10)
+[2025-10-30 01:11:22] ensemble_modelling() error for E1B: error reading from connection
+[2025-10-30 01:12:59] Starting 04_ssdm_train.R  (mode=REPRO, run=A)
+[2025-10-30 01:12:59] Read keepvars: 21 variables
+[2025-10-30 01:12:59] SSDM cores: REPRO=1, FAST=2; replications=10
+[2025-10-30 01:12:59] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-10-30 01:12:59] Training E1B
+[2025-10-30 01:13:00] Training ESDM E1B (REPRO: cores=1, rep=2)
+[2025-10-30 02:13:00] Done E1B
+[2025-10-30 02:13:00] Training E2B
+[2025-10-30 02:13:01] Training ESDM E2B (REPRO: cores=1, rep=2)
+[2025-10-30 03:02:36] Done E2B
+[2025-10-30 03:02:36] Training E3A
+[2025-10-30 03:02:37] Training ESDM E3A (REPRO: cores=1, rep=2)
+[2025-10-30 06:03:57] Done E3A
+[2025-10-30 06:03:57] Training E3B
+[2025-10-30 06:03:59] Training ESDM E3B (REPRO: cores=1, rep=2)
+[2025-10-30 08:30:25] Done E3B
+[2025-10-30 08:30:25] Training E4A
+[2025-10-30 08:30:26] Training ESDM E4A (REPRO: cores=1, rep=2)
+[2025-10-30 11:29:20] Done E4A
+[2025-10-30 11:29:20] Training E4B
+[2025-10-30 11:29:21] Training ESDM E4B (REPRO: cores=1, rep=2)
+[2025-10-30 13:56:47] Done E4B
+[2025-10-30 13:56:47] Training E5A
+[2025-10-30 13:56:50] Training ESDM E5A (REPRO: cores=1, rep=2)
+[2025-10-30 14:04:51] Done E5A
+[2025-10-30 14:04:51] Training E5B
+[2025-10-30 14:04:51] Training ESDM E5B (REPRO: cores=1, rep=2)
+[2025-10-30 15:54:36] Done E5B
+[2025-10-30 15:54:36] Training E6B
+[2025-10-30 15:54:39] Training ESDM E6B (REPRO: cores=1, rep=2)
+[2025-10-30 18:07:06] Done E6B
+[2025-10-30 18:07:06] All species finished.

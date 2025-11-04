@@ -12,8 +12,8 @@ h2o:
 
 ssdm:
   cores_repro: 1
-  cores_fast: 5
-  replications: 10
+  cores_fast: 2
+  replications: 1
 
 seeds:
   global: 123
