@@ -1,0 +1,36 @@
+[2025-11-11 16:01:13] Starting 07_appendix_figures.R
+[2025-11-11 16:01:37] Starting 07_appendix_figures.R
+[2025-11-11 16:03:51] Starting 07_appendix_figures.R
+[2025-11-11 16:04:03] PART 1: Base learner contributions
+[2025-11-11 16:04:03]   Skip E3A | no h2o_models/
+[2025-11-11 16:04:03]   Skip E3B | no h2o_models/
+[2025-11-11 16:04:03]   Skip E4A | no h2o_models/
+[2025-11-11 16:04:03]   Skip E4B | no h2o_models/
+[2025-11-11 16:04:03]   Skip E5A | no h2o_models/
+[2025-11-11 16:04:03]   Skip E5B | no h2o_models/
+[2025-11-11 16:04:03] PART 2: Variable importance
+[2025-11-11 16:04:03] PART 3: Agreement maps (threshold=0.50)
+[2025-11-11 16:04:06]   Agreement: E3A | 86.65%
+[2025-11-11 16:04:08]   Agreement: E3B | 94.25%
+[2025-11-11 16:04:14]   Saved: results/appendix/agreement_maps/Agreement_E3.png
+[2025-11-11 16:04:16]   Agreement: E4A | 85.19%
+[2025-11-11 16:04:18]   Agreement: E4B | 95.41%
+[2025-11-11 16:04:22]   Saved: results/appendix/agreement_maps/Agreement_E4.png
+[2025-11-11 16:04:24]   Agreement: E5A | 89.92%
+[2025-11-11 16:04:25]   Agreement: E5B | 92.57%
+[2025-11-11 16:04:29]   Saved: results/appendix/agreement_maps/Agreement_E5.png
+[2025-11-11 16:04:30] Done. Appendix figures saved in: results/appendix
+[2025-11-11 16:12:37] Starting 07_appendix_figures_FINAL.R
+[2025-11-11 16:12:37] Project root: D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH
+[2025-11-11 16:12:37] PART 1: Variable importance (from CSV files)
+[2025-11-11 16:12:37] PART 2: Agreement maps (threshold=0.50)
+  Agreement: E3A | 86.65%
+  Agreement: E3B | 94.25%
+  Saved: results/appendix/agreement_maps/Agreement_E3.png
+  Agreement: E4A | 85.19%
+  Agreement: E4B | 95.41%
+  Saved: results/appendix/agreement_maps/Agreement_E4.png
+  Agreement: E5A | 89.92%
+  Agreement: E5B | 92.57%
+  Saved: results/appendix/agreement_maps/Agreement_E5.png
+[2025-11-11 16:13:01] Done. Appendix figures saved in: results/appendix

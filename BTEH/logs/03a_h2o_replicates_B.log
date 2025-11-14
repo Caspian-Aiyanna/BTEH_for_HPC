@@ -11,3 +11,16 @@
 [2025-10-27 20:15:54] Read keepvars: 21 variables
 [2025-10-27 20:16:04] H2O threads: 6
 [2025-10-27 20:16:04] Training E1B (rep 1)
+[2025-11-04 15:26:11] Starting 03a_h2o_replicates.R  (mode=FAST, run=B)
+[2025-11-04 15:26:11] Replicates dir: D:/PhD/Projects/SDM_projects/BTEH/SDM_ele/BTEH/BTEH/replicates_DBSCAN
+[2025-11-04 15:26:11] Env dir: data/envi/B
+[2025-11-04 15:26:11] Results root: results/H2O
+[2025-11-04 15:26:13] Read keepvars: 21 variables
+[2025-11-04 15:26:26] H2O threads: 6
+[2025-11-04 15:26:26] Training E1B (rep 1)
+[2025-11-04 15:35:04] Done E1B (rep 1)
+[2025-11-04 15:35:04] Training E1B (rep 2)
+[2025-11-04 15:43:22] Done E1B (rep 2)
+[2025-11-04 15:43:22] Training E1B (rep 3)
+[2025-11-04 15:51:46] Done E1B (rep 3)
+[2025-11-04 15:51:46] Training E2B (rep 1)

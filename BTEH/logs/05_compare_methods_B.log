@@ -1,2 +1,15 @@
 [2025-10-30 21:33:38] Starting 05_h2o_vs_ssdm_vs_ssf_results.R (mode=FAST, run=B, q=0.75)
 [2025-10-30 21:33:49] Starting 05_h2o_vs_ssdm_vs_ssf_results.R (mode=FAST, run=B, q=0.75)
+[2025-11-11 13:16:28] Starting 05_h2o_vs_ssdm_vs_ssf_results.R (mode=FAST, run=B, q=0.75)
+[2025-11-11 13:16:28] Species discovered: E1B, E2B, E3B, E4B, E5B, E6B
+[2025-11-11 13:16:29] [single] E1B | H2O=TRUE, SSDM=TRUE, SSF=TRUE
+[2025-11-11 13:16:49] [single] E2B | H2O=TRUE, SSDM=TRUE, SSF=TRUE
+[2025-11-11 13:17:19] [single] E3B | H2O=TRUE, SSDM=TRUE, SSF=TRUE
+[2025-11-11 13:17:44] [single] E4B | H2O=TRUE, SSDM=TRUE, SSF=TRUE
+[2025-11-11 13:18:05] [single] E5B | H2O=TRUE, SSDM=TRUE, SSF=TRUE
+[2025-11-11 13:18:28] [single] E6B | H2O=TRUE, SSDM=TRUE, SSF=TRUE
+[2025-11-11 13:18:48] Wrote per-replicate metrics (long): results/compare/B/02_tables/per_rep_metrics_long.csv [n=0]
+[2025-11-11 13:18:48] No replicate rows -> skipping replicate summary.
+[2025-11-11 13:18:48] Wrote single-pred metrics (long): results/compare/B/02_tables/per_single_metrics_long.csv [n=18]
+[2025-11-11 13:18:48] Wrote per-species summary (single): results/compare/B/02_tables/per_species_summary_single.csv
+[2025-11-11 13:18:48] Done. Outputs in: results/compare/B

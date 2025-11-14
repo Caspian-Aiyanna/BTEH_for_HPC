@@ -1,0 +1,36 @@
+[2025-11-04 15:55:16] Starting 03a_h2o_replicates.R  (mode=FAST, run=A)
+[2025-11-04 15:55:17] Env dir: data/envi/A (29 layers)
+[2025-11-04 15:55:17] Read keepvars: 21 variables
+[2025-11-04 15:55:29] H2O threads: 6
+[2025-11-04 15:55:29] Replicates dir: data/occ/replicates_DBSCAN (27 files)
+[2025-11-04 15:55:29] Training E1B (rep 1)
+[2025-11-04 16:04:11] Done E1B (rep 1)
+[2025-11-04 16:04:11] Training E1B (rep 2)
+[2025-11-04 16:12:27] Done E1B (rep 2)
+[2025-11-04 16:12:27] Training E1B (rep 3)
+[2025-11-04 16:20:48] Done E1B (rep 3)
+[2025-11-04 16:20:48] Training E2B (rep 1)
+[2025-11-04 16:29:07] Done E2B (rep 1)
+[2025-11-04 16:29:07] Training E2B (rep 2)
+[2025-11-04 16:39:46] Starting 03a_h2o_replicates.R  (mode=FAST, run=A)
+[2025-11-04 16:39:46] Env dir: data/envi/A (29 layers)
+[2025-11-04 16:39:47] Read keepvars: 21 variables
+[2025-11-04 16:39:59] H2O threads: 6
+[2025-11-04 16:39:59] Replicates dir: data/occ/replicates_DBSCAN (27 files)
+[2025-11-04 16:39:59] Skip E1B (rep 1) — outputs present
+[2025-11-04 16:39:59] Skip E1B (rep 2) — outputs present
+[2025-11-04 16:39:59] Skip E1B (rep 3) — outputs present
+[2025-11-04 16:39:59] Skip E2B (rep 1) — outputs present
+[2025-11-04 16:39:59] Training E2B (rep 2)
+[2025-11-04 16:48:27] Done E2B (rep 2)
+[2025-11-04 16:48:27] Training E2B (rep 3)
+[2025-11-04 16:56:49] Done E2B (rep 3)
+[2025-11-04 16:56:49] Training E3A (rep 1)
+[2025-11-04 17:05:44] Done E3A (rep 1)
+[2025-11-04 17:05:44] Training E3A (rep 2)
+[2025-11-04 17:14:35] Done E3A (rep 2)
+[2025-11-04 17:14:35] Training E3A (rep 3)
+[2025-11-04 17:23:31] Done E3A (rep 3)
+[2025-11-04 17:23:31] Training E3B (rep 1)
+[2025-11-04 17:32:44] Done E3B (rep 1)
+[2025-11-04 17:32:44] Training E3B (rep 2)

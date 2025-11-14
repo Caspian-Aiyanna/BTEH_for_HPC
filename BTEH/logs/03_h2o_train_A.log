@@ -54,3 +54,35 @@
 [2025-10-30 00:45:29] Species to run (1): E5A
 [2025-10-30 00:45:29] Skip E5A — outputs present
 [2025-10-30 00:45:29] All species finished.
+[2025-11-06 18:42:13] Starting 03_h2o_train.R  (mode=REPRO, run=A)
+[2025-11-06 18:42:14] Read keepvars: 21 variables
+[2025-11-06 18:42:26] H2O threads: 1
+[2025-11-06 18:42:26] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-11-06 18:42:26] Training E1B
+[2025-11-06 18:42:47] AutoML error for E1B: subscript out of bounds
+[2025-11-06 18:42:47] AutoML returned NULL for E1B — switching to fallback GBM.
+[2025-11-06 18:45:27] Done E1B
+[2025-11-06 18:45:27] Training E2B
+[2025-11-06 18:45:43] AutoML error for E2B: subscript out of bounds
+[2025-11-06 18:45:43] AutoML returned NULL for E2B — switching to fallback GBM.
+[2025-11-06 18:48:20] Done E2B
+[2025-11-06 18:48:21] Skip E3A — outputs present
+[2025-11-06 18:48:22] Training E3B
+[2025-11-06 18:48:46] AutoML error for E3B: subscript out of bounds
+[2025-11-06 18:48:46] AutoML returned NULL for E3B — switching to fallback GBM.
+[2025-11-06 18:51:25] Done E3B
+[2025-11-06 18:51:26] Skip E4A — outputs present
+[2025-11-06 18:51:26] Training E4B
+[2025-11-06 18:51:51] AutoML error for E4B: subscript out of bounds
+[2025-11-06 18:51:51] AutoML returned NULL for E4B — switching to fallback GBM.
+[2025-11-06 18:54:29] Done E4B
+[2025-11-06 18:54:29] Skip E5A — outputs present
+[2025-11-06 18:54:29] Training E5B
+[2025-11-06 18:54:50] AutoML error for E5B: subscript out of bounds
+[2025-11-06 18:54:50] AutoML returned NULL for E5B — switching to fallback GBM.
+[2025-11-06 18:57:29] Done E5B
+[2025-11-06 18:57:29] Training E6B
+[2025-11-06 18:57:51] AutoML error for E6B: subscript out of bounds
+[2025-11-06 18:57:51] AutoML returned NULL for E6B — switching to fallback GBM.
+[2025-11-06 19:00:29] Done E6B
+[2025-11-06 19:00:29] All species finished.

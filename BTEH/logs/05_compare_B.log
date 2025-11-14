@@ -4,3 +4,71 @@
 [2025-10-27 16:48:26] Done. Outputs in: results/compare/B
 [2025-10-29 09:17:50] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
 [2025-10-31 12:05:59] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-06 12:31:51] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-06 12:42:22] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-06 12:42:22] Species compared: E1B, E2B, E3B, E4B, E5B, E6B
+[2025-11-06 12:42:22] [AOI] Loaded data/shp/HV20233.shp
+[2025-11-06 12:42:22] Compare E1B | H2O: prediction_E1B.tif | SSDM: ESDM_E1B.tif
+[2025-11-06 12:42:44] Compare E2B | H2O: prediction_E2B.tif | SSDM: ESDM_E2B.tif
+[2025-11-06 12:43:05] Compare E3B | H2O: prediction_E3B.tif | SSDM: ESDM_E3B.tif
+[2025-11-06 12:43:24] Compare E4B | H2O: prediction_E4B.tif | SSDM: ESDM_E4B.tif
+[2025-11-06 12:43:43] Compare E5B | H2O: prediction_E5B.tif | SSDM: ESDM_E5B.tif
+[2025-11-06 12:44:03] Compare E6B | H2O: prediction_E6B.tif | SSDM: ESDM_E6B.tif
+[2025-11-06 12:44:24] Done. Central outputs in: results/compare/h2o_vs_ssdm/B
+[2025-11-06 16:08:09] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-06 16:08:09] Species compared: E1B, E2B, E3B, E4B, E5B, E6B
+[2025-11-06 16:08:09] [AOI] Loaded data/shp/HV20233.shp
+[2025-11-06 16:08:09] Compare E1B | H2O: prediction_E1B.tif | SSDM: ESDM_E1B.tif
+[2025-11-06 16:08:32] Compare E2B | H2O: prediction_E2B.tif | SSDM: ESDM_E2B.tif
+[2025-11-06 16:08:50] Compare E3B | H2O: prediction_E3B.tif | SSDM: ESDM_E3B.tif
+[2025-11-06 16:09:08] Compare E4B | H2O: prediction_E4B.tif | SSDM: ESDM_E4B.tif
+[2025-11-06 16:09:26] Compare E5B | H2O: prediction_E5B.tif | SSDM: ESDM_E5B.tif
+[2025-11-06 16:09:44] Compare E6B | H2O: prediction_E6B.tif | SSDM: ESDM_E6B.tif
+[2025-11-10 22:31:28] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-10 22:31:28] Species compared: E1B, E2B, E3B, E4B, E5B, E6B
+[2025-11-10 22:31:28] [AOI] Loaded data/shp/HV20233.shp
+[2025-11-10 22:31:28] Compare E1B | H2O: prediction_E1B.tif | SSDM: ESDM_E1B.tif
+[2025-11-10 22:31:49] Compare E2B | H2O: prediction_E2B.tif | SSDM: ESDM_E2B.tif
+[2025-11-10 22:32:07] Compare E3B | H2O: prediction_E3B.tif | SSDM: ESDM_E3B.tif
+[2025-11-10 22:32:24] Compare E4B | H2O: prediction_E4B.tif | SSDM: ESDM_E4B.tif
+[2025-11-10 22:32:44] Compare E5B | H2O: prediction_E5B.tif | SSDM: ESDM_E5B.tif
+[2025-11-10 22:33:03] Compare E6B | H2O: prediction_E6B.tif | SSDM: ESDM_E6B.tif
+[2025-11-10 22:33:22] Done. Central outputs in: results/compare/h2o_vs_ssdm/B
+[2025-11-10 22:33:22] =========================================
+[2025-11-11 12:54:13] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-11 12:54:13] Species compared: E1B, E2B, E3B, E4B, E5B, E6B
+[2025-11-11 12:54:13] [AOI] Loaded data/shp/HV20233.shp
+[2025-11-11 12:54:13] Compare E1B | H2O: prediction_E1B.tif | SSDM: ESDM_E1B.tif
+[2025-11-11 12:54:36] Compare E2B | H2O: prediction_E2B.tif | SSDM: ESDM_E2B.tif
+[2025-11-11 12:54:56] Compare E3B | H2O: prediction_E3B.tif | SSDM: ESDM_E3B.tif
+[2025-11-11 12:55:16] Compare E4B | H2O: prediction_E4B.tif | SSDM: ESDM_E4B.tif
+[2025-11-11 12:55:34] Compare E5B | H2O: prediction_E5B.tif | SSDM: ESDM_E5B.tif
+[2025-11-11 12:55:54] Compare E6B | H2O: prediction_E6B.tif | SSDM: ESDM_E6B.tif
+[2025-11-11 12:56:14] Done. Central outputs in: results/compare/h2o_vs_ssdm/B
+[2025-11-11 12:56:14] =========================================
+[2025-11-12 10:40:55] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-12 10:40:56] Species compared: E1B, E2B, E3B, E4B, E5B, E6B
+[2025-11-12 10:40:56] [AOI] Loaded data/shp/HV20233.shp
+[2025-11-12 10:40:56] Compare E1B | H2O: prediction_E1B.tif | SSDM: ESDM_E1B.tif
+[2025-11-12 10:41:17] Compare E2B | H2O: prediction_E2B.tif | SSDM: ESDM_E2B.tif
+[2025-11-12 10:41:37] Compare E3B | H2O: prediction_E3B.tif | SSDM: ESDM_E3B.tif
+[2025-11-12 10:41:59] Compare E4B | H2O: prediction_E4B.tif | SSDM: ESDM_E4B.tif
+[2025-11-12 10:42:19] Compare E5B | H2O: prediction_E5B.tif | SSDM: ESDM_E5B.tif
+[2025-11-12 10:42:38] Compare E6B | H2O: prediction_E6B.tif | SSDM: ESDM_E6B.tif
+[2025-11-12 10:42:59] Done. Central outputs in: results/compare/h2o_vs_ssdm/B
+[2025-11-12 10:42:59] =========================================
+[2025-11-12 11:26:23] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-12 11:27:50] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-12 11:31:21] Starting 05_h2o_vs_ssdm.R  (mode=FAST, run=B, q=0.75)
+[2025-11-12 11:31:21] Species compared: E1B, E2B, E3B, E4B, E5B, E6B
+[2025-11-12 11:31:21] [AOI] Loaded data/shp/HV20233.shp
+[2025-11-12 11:31:21] Compare E1B | H2O: prediction_E1B.tif | SSDM: ESDM_E1B.tif
+[2025-11-12 11:31:43] Compare E2B | H2O: prediction_E2B.tif | SSDM: ESDM_E2B.tif
+[2025-11-12 11:32:02] Compare E3B | H2O: prediction_E3B.tif | SSDM: ESDM_E3B.tif
+[2025-11-12 11:32:20] Compare E4B | H2O: prediction_E4B.tif | SSDM: ESDM_E4B.tif
+[2025-11-12 11:32:37] Compare E5B | H2O: prediction_E5B.tif | SSDM: ESDM_E5B.tif
+[2025-11-12 11:32:55] Compare E6B | H2O: prediction_E6B.tif | SSDM: ESDM_E6B.tif
+[2025-11-12 11:33:13] Metrics CSV written: results/compare/h2o_vs_ssdm/B/01_between_methods/between_method_metrics.csv
+[2025-11-12 11:33:15] Done. Central outputs in: results/compare/h2o_vs_ssdm/B
+[2025-11-12 11:33:15] All 5 metric plots generated successfully
+[2025-11-12 11:33:15] =========================================

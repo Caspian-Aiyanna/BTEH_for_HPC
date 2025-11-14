@@ -86,3 +86,31 @@
 [2025-10-30 15:54:39] Training ESDM E6B (REPRO: cores=1, rep=2)
 [2025-10-30 18:07:06] Done E6B
 [2025-10-30 18:07:06] All species finished.
+[2025-11-06 22:50:01] Starting 04_ssdm_train.R  (mode=REPRO, run=A)
+[2025-11-06 22:50:01] Read keepvars: 21 variables
+[2025-11-06 22:50:01] SSDM cores: REPRO=1, FAST=2; replications=10
+[2025-11-06 22:50:01] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-11-06 22:50:01] Training E1B
+[2025-11-06 22:50:05] Training ESDM E1B (REPRO: cores=1, rep=2)
+[2025-11-06 22:50:40] ensemble_modelling() error for E1B: error reading from connection
+[2025-11-06 22:51:54] Starting 04_ssdm_train.R  (mode=REPRO, run=A)
+[2025-11-06 22:51:55] Read keepvars: 21 variables
+[2025-11-06 22:51:55] SSDM cores: REPRO=1, FAST=2; replications=10
+[2025-11-06 22:51:55] Species to run (9): E1B, E2B, E3A, E3B, E4A, E4B, E5A, E5B, E6B
+[2025-11-06 22:51:55] Training E1B
+[2025-11-06 22:51:56] Training ESDM E1B (REPRO: cores=1, rep=10)
+[2025-11-07 03:48:14] Done E1B
+[2025-11-07 03:48:14] Training E2B
+[2025-11-07 03:48:15] Training ESDM E2B (REPRO: cores=1, rep=10)
+[2025-11-07 07:47:14] Done E2B
+[2025-11-07 07:47:14] Skip E3A — outputs present
+[2025-11-07 07:47:14] Training E3B
+[2025-11-07 07:47:15] Training ESDM E3B (REPRO: cores=1, rep=10)
+[2025-11-07 19:49:13] Done E3B
+[2025-11-07 19:49:14] Skip E4A — outputs present
+[2025-11-07 19:49:14] Training E4B
+[2025-11-07 19:49:19] Training ESDM E4B (REPRO: cores=1, rep=10)
+[2025-11-08 08:05:36] Done E4B
+[2025-11-08 08:05:36] Skip E5A — outputs present
+[2025-11-08 08:05:36] Training E5B
+[2025-11-08 08:05:37] Training ESDM E5B (REPRO: cores=1, rep=10)
