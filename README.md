@@ -1,224 +1,140 @@
-# 🐘 BTEH – Elephant Habitat Modelling & Uncertainty Analysis
+# BTEH Project: Elephant Habitat Modeling
 
-This repository contains the full, reproducible modelling pipeline for **Main Paper** of the BTEH project — quantifying **habitat suitability, temporal change, and algorithmic uncertainty** for African elephants before and after fence removal in Kariega Game Reserve, South Africa.
+Species Distribution Models (SDMs) for Asian elephants using H2O AutoML and SSDM ensemble methods.
 
-All workflows are implemented in **R** (with optional Google Earth Engine extraction scripts) and are designed to run both locally and on **HPC clusters** via SLURM or PBS job schedulers.
+## Requirements
 
----
+- R 4.4.2 or higher
+- RStudio (recommended)
+- Java 8-17 (for H2O)
+- 8+ GB RAM
+- 5+ GB disk space
 
-## 🌿 Project Overview
+## Quick Start
 
-The pipeline integrates multiple modelling frameworks:
-
-| Framework | Description |
-|------------|--------------|
-| **H2O AutoML** | Machine-learning ensemble (GBM, XGBoost, DNN, DRF, etc - upto 100 models) for habitat suitability |
-| **SSDM** | Classical stacked species distribution modelling (GLM, GAM, RF, ANN, GBM) |
-| **SSF/RSF** | Step-selection functions derived from GPS telemetry (used for triangulation) |
-| **Comparison & Uncertainty** | Between-method, temporal, and replicate analyses |
-
-All outputs are automatically written under `results/` and logged under `logs/`.
-
----
-
-## 📁 Folder Structure
-
-```
-.
-├── config.yml                # Global config (mode, cores, etc.)
-├── Makefile                  # Optional automation targets
-├── renv.lock                 # Reproducible R environment
-├── R/                        # Utility functions
-│   ├── utils_h2o.R
-│   ├── utils_io.R
-│   ├── utils_kendall.R
-│   ├── utils_plot.R
-│   └── utils_repro.R
-├── scripts/                  # Main pipeline scripts
-│   ├── 02_dbscan_thin_degrees.R     # Occurrence thinning
-│   ├── 03_h2o_train.R               # AutoML training
-│   ├── 04_ssdm_train.R              # SSDM ensemble training
-│   ├── 05_h2o_vs_ssdm.R             # Between-method comparison
-│   ├── 06a_uncertainty.R            # Uncertainty decomposition
-│   └── BTEH_GEE_Extract.js          # GEE environmental extraction
-├── data/
-│   ├── clean/       # Pre-processed telemetry CSVs (E1B–E6B, A/B)
-│   ├── envi/        # Environmental stacks (A/B)
-│   ├── occ/         # Thinned & replicate occurrences
-│   └── shp/         # AOI shapefiles (HV20233.*)
-├── results/          # Model outputs (H2O, SSDM, compare, uncertainty, etc.)
-├── logs/             # Run-time logs
-├── plans/            # Variable-selection plans (Kendall results)
-└── hpc/              # SLURM job scripts
-```
-
----
-
-## ⚙️ Environment Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Caspian-Aiyanna/ems_paper.git
-   cd ems_paper
-   ```
-
-2. **Restore the R environment**
-   ```bash
-   Rscript -e "renv::restore(prompt = FALSE)"
-   ```
-
-3. **(Optional)** Check directory structure
-   ```r
-   fs::dir_tree('.', recurse = 2)
-   ```
-
----
-
-## 🚀 Running the Pipeline
-
-### 🧩 Option 1 — Reproducible (“REPRO”) Run
-
-Use **single-core deterministic** execution to eliminate randomness.  
-Ideal for publication and final validation.
+### 1. Clone Repository
 
 ```bash
-sbatch hpc/BTEH_REPRO.slurm
+git clone https://github.com/Caspian-Aiyanna/BTEH_for_HPC.git
+cd BTEH_for_HPC
 ```
 
-Or locally:
+### 2. Install Packages
 
-```bash
-Rscript scripts/03_h2o_train.R --run A --mode REPRO
-Rscript scripts/04_ssdm_train.R --run A --mode REPRO
-Rscript scripts/05_h2o_vs_ssdm.R --run A --mode REPRO
+Open RStudio and open the project file `BTEH.Rproj`. Then run:
 
-Rscript scripts/03_h2o_train.R --run B --mode REPRO
-Rscript scripts/04_ssdm_train.R --run B --mode REPRO
-Rscript scripts/05_h2o_vs_ssdm.R --run B --mode REPRO
+```r
+renv::restore()
 ```
 
-**Outputs:**  
-- `results/H2O/<RUN>/<SP>/prediction_<SP>.tif`  
-- `results/SSDM/<RUN>/<SP>/ESDM_<SP>.tif`  
-- `results/compare/h2o_vs_ssdm/<RUN>/metrics/…`  
-- Logs under `logs/03_*.log`, `logs/04_*.log`, `logs/05_*.log`
+This installs all required packages. Takes 15-30 minutes.
 
----
+### 3. Run Analysis
 
-### ⚡ Option 2 — Fast (“FAST”) Run
+In RStudio console:
 
-Parallelized execution for development and testing.  
-Results are near-identical but may vary slightly due to parallel randomness.
+```r
+# Set working directory to project root
+setwd("C:/path/to/BTEH/BTEH")
 
-```bash
-sbatch hpc/BTEH_FAST.slurm
+# Run H2O models for both runs
+source("scripts_RemoteSensing for E and C_/03_h2o_train.R")
+
+# Run SSDM models for both runs
+source("scripts_RemoteSensing for E and C_/04_ssdm_train.R")
+
+# Generate comparison plots
+source("scripts_RemoteSensing for E and C_/05_h2o_vs_ssdm.R")
+source("scripts_RemoteSensing for E and C_/05b_temporal_comparison.R")
+source("scripts_RemoteSensing for E and C_/05a_h2o_vs_ssdm_panel.R")
+
+# Generate appendix figures
+source("scripts_RemoteSensing for E and C_/07_appendix.R")
 ```
 
-Or locally (multi-core machine):
+## Project Structure
 
-```bash
-Rscript scripts/03_h2o_train.R --run A --mode FAST
-Rscript scripts/04_ssdm_train.R --run A --mode FAST
-Rscript scripts/05_h2o_vs_ssdm.R --run A --mode FAST
+```
+BTEH/
+├── data/                    # Input data
+│   ├── clean/              # GPS telemetry data
+│   ├── envi/               # Environmental layers
+│   └── shp/                # Shapefiles
+├── scripts_RemoteSensing for E and C_/  # Main analysis scripts
+├── R/                      # Helper functions
+├── results/                # Output files
+├── logs/                   # Log files
+└── config.yml             # Configuration
 ```
 
----
+## Scripts
 
-### 🧬 Option 3 — Species-Array Mode (HPC only)
+### Main Analysis
+- `03_h2o_train.R` - Train H2O AutoML models
+- `04_ssdm_train.R` - Train SSDM ensemble models
+- `05_h2o_vs_ssdm.R` - Compare methods
+- `05a_h2o_vs_ssdm_panel.R` - Before/after panels
+- `05b_temporal_comparison.R` - Temporal analysis
+- `07_appendix.R` - Supplementary figures
 
-Runs each elephant (E1B–E6B) as a separate array job:
+### Configuration
+Edit `config.yml` to change:
+- Run mode (FAST or REPRO)
+- Number of threads
+- Memory allocation
+- Species to analyze
 
-```bash
-sbatch hpc/BTEH_FAST_array.slurm
+## Output
+
+After running all scripts:
+
+```
+results/
+├── H2O/                    # H2O model predictions
+│   ├── A/                 # Run A (3 species)
+│   └── B/                 # Run B (6 species)
+├── SSDM/                   # SSDM ensemble predictions
+│   ├── A/
+│   └── B/
+└── compare/                # Comparison plots and metrics
 ```
 
-This distributes species across nodes and merges results automatically.
+## Troubleshooting
 
----
-
-## 🧾 Log Files
-
-All scripts log progress and warnings to the `logs/` folder:
-- `03_h2o_train_A.log`, `04_ssdm_train_B.log`, etc.
-- `05_compare_methods_A.log` and `05_compare_methods_B.log`
-- Environment information and timing details are captured for reproducibility.
-
----
-
-## 📊 Expected Outputs
-
-- `results/H2O/` – AutoML rasters, models, leaderboards  
-- `results/SSDM/` – Ensemble rasters, algorithm summaries  
-- `results/compare/` – Metrics, hotspot overlaps, maps  
-- `results/uncertainty/` – Variance, stability, gain/loss tables  
-
----
-
-## 📄 Manuscript Scripts
-
-The `scripts_RemoteSensing for E and C_/` directory contains all scripts used to generate results for the Remote Sensing manuscript.
-
-### Execution Order
-
-1. **`03_h2o_train.R`** - H2O AutoML training (~2-4 hours)
-2. **`04_ssdm_train.R`** - SSDM ensemble training (~3-6 hours)
-3. **`05_h2o_vs_ssdm.R`** - Method comparison (~30 min)
-4. **`05b_temporal_comparison.R`** - Temporal analysis (~15 min)
-5. **`05a_h2o_vs_ssdm_panel.R`** - Before/After panels (~20 min)
-6. **`07_appendix.R`** - Appendix figures (~1 hour)
-
-### Quick Start
-
-```bash
-# Run full manuscript pipeline
-Rscript "scripts_RemoteSensing for E and C_/03_h2o_train.R" --run A --mode REPRO
-Rscript "scripts_RemoteSensing for E and C_/03_h2o_train.R" --run B --mode REPRO
-Rscript "scripts_RemoteSensing for E and C_/04_ssdm_train.R" --run A --mode REPRO
-Rscript "scripts_RemoteSensing for E and C_/04_ssdm_train.R" --run B --mode REPRO
-Rscript "scripts_RemoteSensing for E and C_/05_h2o_vs_ssdm.R"
-Rscript "scripts_RemoteSensing for E and C_/05b_temporal_comparison.R"
-Rscript "scripts_RemoteSensing for E and C_/05a_h2o_vs_ssdm_panel.R"
-Rscript "scripts_RemoteSensing for E and C_/07_appendix.R"
+### Package installation fails
+```r
+# Update renv
+install.packages("renv")
+renv::restore()
 ```
 
-**For detailed instructions, see [`EXECUTION_GUIDE.md`](EXECUTION_GUIDE.md)**
+### H2O won't start
+```r
+# Check Java
+system("java -version")
 
----
+# Initialize with less memory
+library(h2o)
+h2o.init(nthreads = 1, max_mem_size = "4G")
+```
 
-## 📚 Documentation
+### Script can't find config.yml
+Make sure you're running from project root:
+```r
+setwd("C:/path/to/BTEH/BTEH")
+file.exists("config.yml")  # Should return TRUE
+```
 
-- **[EXECUTION_GUIDE.md](EXECUTION_GUIDE.md)** - Step-by-step execution instructions
-- **[MANUSCRIPT_SCRIPTS_REVIEW.md](MANUSCRIPT_SCRIPTS_REVIEW.md)** - Code review summary
-- **[SUPERVISOR_REVIEW.md](SUPERVISOR_REVIEW.md)** - Project assessment
+## Citation
 
----
+If you use this code, please cite:
 
-## 📚 Citation
+[Add your citation here]
 
-If you use this workflow or data structure, please cite:
+## License
 
-> Aiyanna C., et al. (2025). *Automated ensemble modelling and uncertainty quantification for African elephant habitat connectivity*.  
-> Environmental Modelling & Software. (In preparation)
+[Add license information]
 
----
+## Contact
 
-## 🧰 Contact
-
-**Author:** Caspian Aiyanna  
-**Institution:** [Your University / Research Group]  
-**Email:** [harinaiyanna.cheriyandaraveendra@phd.unipd.it]  
-**GitHub:** [https://github.com/Caspian-Aiyanna](https://github.com/Caspian-Aiyanna)
-
----
-
-### 🏁 Quick Summary
-
-| Mode | Purpose | HPC script | CPU | Typical runtime |
-|------|----------|-------------|-----|-----------------|
-| **REPRO** | Final, deterministic results | `hpc/BTEH_REPRO.slurm` | 1 | 24–48 h |
-| **FAST** | Development, parallel | `hpc/BTEH_FAST.slurm` | 8–16 | 3–8 h |
-| **FAST-ARRAY** | Multi-species parallel | `hpc/BTEH_FAST_array.slurm` | 8 each | 1–4 h |
-
----
-
-*This repository embodies the principles of open, reproducible ecological modelling and provides a modular foundation for cross-framework SDM benchmarking.*
+[Add contact information]
