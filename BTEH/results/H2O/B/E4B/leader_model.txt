@@ -1,4 +1,0 @@
-leader_id=GBM_model_R_1762450938920_310
-n_vars=21
-nthreads=1
-mode=REPRO

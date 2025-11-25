@@ -2,26 +2,35 @@ suppressPackageStartupMessages({
   library(yaml)
 })
 
+# Read the project configuration file
 read_config <- function(path = "config.yml") {
   yaml::read_yaml(path)
 }
 
+# Set execution mode (REPRO or FAST) and configure threading
+# REPRO mode: single-threaded for deterministic results
+# FAST mode: multi-threaded for faster execution
 set_mode <- function(cfg) {
   mode <- toupper(cfg$mode %||% "REPRO")
   if (mode == "REPRO") {
-    # keep it single-threaded / deterministic where applicable
-    Sys.setenv("OMP_NUM_THREADS" = "1",
-               "MKL_NUM_THREADS" = "1",
-               "OPENBLAS_NUM_THREADS" = "1")
+    # Force single-threaded execution for reproducibility
+    Sys.setenv(
+      "OMP_NUM_THREADS" = "1",
+      "MKL_NUM_THREADS" = "1",
+      "OPENBLAS_NUM_THREADS" = "1"
+    )
   }
   invisible(mode)
 }
 
+# Default value operator: return b if a is NULL
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
+# Generate a deterministic seed from a text tag
+# This ensures the same tag always produces the same seed
 seed_for <- function(tag, base = 1L) {
-  # deterministic mapping of a tag to a seed
-  h <- as.integer(abs(stats::setNames(utils::adist(tag, tag), NULL))) + as.integer(base)
+  h <- sum(utf8ToInt(as.character(tag))) + as.integer(base)
+  h <- as.integer(abs(h) %% .Machine$integer.max)
   set.seed(h)
   invisible(h)
 }

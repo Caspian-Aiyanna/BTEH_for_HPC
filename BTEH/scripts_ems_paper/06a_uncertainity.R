@@ -1,30 +1,8 @@
 #!/usr/bin/env Rscript
-# =============================================================================
-# 06a_uncertainty.R (folder-complete outputs)
-# Uncertainty Decomposition (SSF–RSF vs H2O & SSDM), per elephant & run (A/B)
-#
-# Inputs (tries in order, first hit wins)
-#   SP = <ELE><RUN>  e.g., E3A, E5B
-#   H2O  : results/H2O/<RUN>/<SP>/prediction_<SP>.tif
-#          results/H2O/<RUN>/prediction_<SP>.tif
-#          (fallback: first *.tif under those dirs)
-#   SSDM : results/SSDM/<RUN>/<SP>/ESDM_<SP>.tif
-#          results/SSDM/<RUN>/ESDM_<SP>.tif
-#          (fallback: first *.tif under those dirs)
-#   SSF  : results/SSF/<RUN>/<SP>/<SP>_SSF_rsf_0to1.tif
-#          results/SSF/<RUN>/<SP>_SSF_rsf_0to1.tif
-#          results/SSF/<SP>_SSF_rsf_0to1.tif
-#          (fallback: first *.tif under those dirs)
-#
-# Outputs:
-#   paper_results/uncertainty/<ELE>/
-#     H2O/      <ELE>_A/B_H2O.tif, <ELE>_A/B_H2O_q75mask.tif, <ELE>_delta_BminusA.tif
-#     SSDM/     <ELE>_A/B_SSDM.tif, <ELE>_A/B_SSDM_q75mask.tif, <ELE>_delta_BminusA.tif
-#     SSF/      <ELE>_A/B_SSF.tif,  <ELE>_A/B_SSF_q75mask.tif,  <ELE>_delta_BminusA.tif
-#     combined/ mean/sd/cv/agreement/ diffs/ change classes (TIF)
-#     figures/  ALL PNGs for maps
-#     tables/   per-run stats, pairwise corrs, Jaccard, temporal Jaccard
-# =============================================================================
+# Uncertainty Decomposition Analysis
+# Analyzes uncertainty across SSF, H2O, and SSDM methods for each elephant
+# Compares temporal changes (before vs after) and method agreement
+# Output: Rasters, maps, and tables in paper_results/uncertainty/<ELEPHANT>/
 
 suppressPackageStartupMessages({
   library(optparse)
@@ -40,7 +18,7 @@ suppressPackageStartupMessages({
   library(rnaturalearth)
 })
 
-# ------------------------------- CLI -----------------------------------------
+# Command-line options
 option_list <- list(
   make_option(c("-e","--elephant"), type="character", default=NULL,
               help="Elephants: E3 or E3,E4,E5 or ALL. (default set used if source() without args)"),
@@ -54,14 +32,14 @@ option_list <- list(
 )
 opt <- parse_args(OptionParser(option_list=option_list))
 
-# ---- Coastline toggles ----
+# Coastline display settings
 opt$coast <- TRUE
 if (exists("opt_disable_coast", inherits = TRUE) && isTRUE(opt_disable_coast)) opt$coast <- FALSE
 if (!requireNamespace("rnaturalearth", quietly = TRUE) ||
     (!requireNamespace("rnaturalearthdata", quietly = TRUE) &&
      !requireNamespace("rnaturalearthhires", quietly = TRUE))) opt$coast <- FALSE
 
-# Honor absolute root when sourcing()
+# Use absolute root path if provided via source()
 if (exists("opt_root", inherits = TRUE) && nzchar(opt_root)) {
   opt$root <- opt_root
   message("[ROOT] Using opt_root = ", normalizePath(opt$root, mustWork = FALSE))

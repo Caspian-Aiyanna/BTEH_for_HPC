@@ -151,18 +151,45 @@ All scripts log progress and warnings to the `logs/` folder:
 - `results/SSDM/` – Ensemble rasters, algorithm summaries  
 - `results/compare/` – Metrics, hotspot overlaps, maps  
 - `results/uncertainty/` – Variance, stability, gain/loss tables  
-- `results/figures/` – Final patchwork panels for publication
-
-Each result folder includes `.csv` summaries and `.tif` rasters ready for visualization.
 
 ---
 
-## 🧠 Notes for HPC Users
+## 📄 Manuscript Scripts
 
-- **Modules:** Load `R/4.3.2`, `GDAL`, `GEOS`, and `PROJ` if required.  
-- **Logs:** Check progress with `tail -f logs/BTEH_REPRO_*.out`.  
-- **Monitoring:** Use `squeue -u $USER` (SLURM) or `qstat` (PBS).  
-- **Storage:** Prefer `/scratch` for heavy intermediate files.
+The `scripts_RemoteSensing for E and C_/` directory contains all scripts used to generate results for the Remote Sensing manuscript.
+
+### Execution Order
+
+1. **`03_h2o_train.R`** - H2O AutoML training (~2-4 hours)
+2. **`04_ssdm_train.R`** - SSDM ensemble training (~3-6 hours)
+3. **`05_h2o_vs_ssdm.R`** - Method comparison (~30 min)
+4. **`05b_temporal_comparison.R`** - Temporal analysis (~15 min)
+5. **`05a_h2o_vs_ssdm_panel.R`** - Before/After panels (~20 min)
+6. **`07_appendix.R`** - Appendix figures (~1 hour)
+
+### Quick Start
+
+```bash
+# Run full manuscript pipeline
+Rscript "scripts_RemoteSensing for E and C_/03_h2o_train.R" --run A --mode REPRO
+Rscript "scripts_RemoteSensing for E and C_/03_h2o_train.R" --run B --mode REPRO
+Rscript "scripts_RemoteSensing for E and C_/04_ssdm_train.R" --run A --mode REPRO
+Rscript "scripts_RemoteSensing for E and C_/04_ssdm_train.R" --run B --mode REPRO
+Rscript "scripts_RemoteSensing for E and C_/05_h2o_vs_ssdm.R"
+Rscript "scripts_RemoteSensing for E and C_/05b_temporal_comparison.R"
+Rscript "scripts_RemoteSensing for E and C_/05a_h2o_vs_ssdm_panel.R"
+Rscript "scripts_RemoteSensing for E and C_/07_appendix.R"
+```
+
+**For detailed instructions, see [`EXECUTION_GUIDE.md`](EXECUTION_GUIDE.md)**
+
+---
+
+## 📚 Documentation
+
+- **[EXECUTION_GUIDE.md](EXECUTION_GUIDE.md)** - Step-by-step execution instructions
+- **[MANUSCRIPT_SCRIPTS_REVIEW.md](MANUSCRIPT_SCRIPTS_REVIEW.md)** - Code review summary
+- **[SUPERVISOR_REVIEW.md](SUPERVISOR_REVIEW.md)** - Project assessment
 
 ---
 

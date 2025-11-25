@@ -1,15 +1,14 @@
-# ============================================================================
-# SSDM training pipeline — similar to the H2O runner.
-# - Uses config.yml, logging, Kendall plan (plans/<RUN>/keepvars.csv)
-# - REPRO: single-core; FAST: cfg$ssdm$cores_fast
-# - Deterministic seeds; resume guards; per-species outputs
-# - Holdout CV only; ensemble_modelling only
-# ============================================================================
+# SSDM Ensemble Training Pipeline
+# Trains Stacked Species Distribution Models using multiple algorithms
+# Uses spatially-thinned occurrence data and environmental layers
+# Supports both REPRO (deterministic) and FAST (parallel) execution modes
+# Input:  data/occ/thinned_DBSCAN/<SPECIES>.csv
+# Output: results/SSDM/<RUN>/<SPECIES>/
 
 suppressPackageStartupMessages({
   library(optparse)
   library(terra)
-  library(raster)   # SSDM expects Raster*
+  library(raster)   # SSDM package requires raster objects
   library(SSDM)
   library(dplyr)
   library(readr)
@@ -19,6 +18,7 @@ suppressPackageStartupMessages({
   library(pROC)
 })
 
+# Default value operator and helper functions
 `%||%` <- function(x, y) if (is.null(x)) y else x
 sp_hash_int <- function(sp) sum(utf8ToInt(as.character(sp))) %% 10000L
 drop_nzv <- function(df, cols) {
@@ -35,7 +35,7 @@ strict_int <- function(x, min_val = 1L) {
 }
 nz <- function(x) { x <- if (is.null(x)) NA_character_ else as.character(x); x[!nzchar(x)] <- NA_character_; x }
 
-# --- robust sourcing regardless of CWD ---------------------------------------
+# Detect script location and project root
 .this_file <- function() {
   args <- commandArgs(trailingOnly = FALSE)
   filearg <- grep("^--file=", args, value = TRUE)

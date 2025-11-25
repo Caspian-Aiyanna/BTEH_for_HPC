@@ -1,26 +1,7 @@
-# =============================================================================
-# 05_h2o_vs_ssdm_vs_ssf_results.R — Three-method comparison (replicates if present, else singles)
-#
-# File name conventions (singles):
-#   H2O : results/H2O/<RUN>/<SP>/prediction_<SP>.tif
-#   SSDM: results/SSDM/<RUN>/<SP>/ESDM_<SP>.tif
-#   SSF : results/SSF/<RUN>/<SP>/<SP>_SSF_rsf_0to1.tif
-#
-# Replicates (if present; flexible fallback inside each rep folder):
-#   H2O : results/H2O/<RUN>/<SP>/replicates/rep<k>/{prediction_<SP>.tif|pred.tif|first .tif}
-#   SSDM: results/SSDM/<RUN>/<SP>/replicates/rep<k>/{ESDM_<SP>_rep<k>.tif|first .tif}
-#
-# Outputs:
-#   - results/compare/<RUN>/01_between_methods/{rasters,plots}/...
-#   - results/compare/<RUN>/02_tables/{per_rep_metrics_long.csv, per_single_metrics_long.csv,
-#                                     per_species_summary_long.csv, per_species_summary_single.csv}
-#   - results/compare/<RUN>/03_maps/{<SP>_{H2O,SSDM,SSF}_mean.png, diff_*.png}
-#
-# Notes:
-#   - Default: --mode FAST, --run A
-#   - Uses your utils_io.R + utils_repro.R for logging/paths/mode
-#   - NA-safe; resumes cleanly
-# =============================================================================
+# Three-Method Comparison: H2O vs SSDM vs SSF
+# Compares habitat suitability predictions across three modeling frameworks
+# Handles both single predictions and replicates with flexible file discovery
+# Output: Correlation metrics, difference maps, and hotspot overlap statistics
 
 suppressPackageStartupMessages({
   library(optparse)
@@ -32,12 +13,12 @@ suppressPackageStartupMessages({
   library(ggplot2)
   library(scales)
   library(tools)
-  library(grid)    # unit() in legends
+  library(grid)
   library(purrr)
   library(stringr)
 })
 
-# --- robust sourcing regardless of CWD ---------------------------------------
+# Detect script location and project root
 .this_file <- function() {
   args <- commandArgs(trailingOnly = FALSE)
   filearg <- grep("^--file=", args, value = TRUE)
@@ -46,7 +27,7 @@ suppressPackageStartupMessages({
     fi <- tryCatch(normalizePath(sys.frames()[[1]]$ofile), error = function(e) NA_character_)
     if (!is.na(fi)) return(fi)
   }
-  stop("Cannot determine script path; run via Rscript or setwd() to project root.")
+  stop("Cannot determine script path. Run via Rscript or set working directory to project root.")
 }
 .script <- dirname(.this_file())
 .root   <- normalizePath(file.path(.script, ".."), winslash = "/", mustWork = TRUE)
@@ -56,7 +37,7 @@ source(file.path(.root, "R", "utils_repro.R"))
 
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
-# --- CLI ---------------------------------------------------------------------
+# Command-line options
 opt <- list(
   make_option(c("--run"),     type = "character", default = "B",    help = "Run tag: A or B [default A]"),
   make_option(c("--mode"),    type = "character", default = "FAST", help = "REPRO or FAST [default FAST]"),

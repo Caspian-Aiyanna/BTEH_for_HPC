@@ -1,18 +1,9 @@
 #!/usr/bin/env Rscript
-# =============================================================================
-# 05_h2o_vs_ssdm.R — Between-method comparison (H2O vs SSDM)
-# - Config + utils driven
-# - If --run is omitted, auto-runs BOTH A and B by self-invocation
-# - Optional --species to limit to one dataset (e.g., E3A)
-# - Inputs:
-#     H2O : results/H2O/<RUN>/<SP>/prediction_<SP>.tif
-#     SSDM: results/SSDM/<RUN>/<SP>/ESDM_<SP>.tif
-# - Outputs (all three locations are written):
-#     Central: results/compare/h2o_vs_ssdm/<RUN>/
-#     H2O per-SP:  results/H2O/<RUN>/<SP>/compare/
-#     SSDM per-SP: results/SSDM/<RUN>/<SP>/compare/
-#   (metrics CSV, diff rasters, hotspot rasters, maps, per-elephant panels)
-# =============================================================================
+# H2O vs SSDM Comparison Analysis
+# Compares habitat suitability predictions between H2O and SSDM methods
+# Calculates correlation metrics, generates difference maps, and analyzes hotspot overlap
+# Can process single run (A or B) or automatically run both sequentially
+# Output: results/compare/h2o_vs_ssdm/<RUN>/ (metrics, maps, panels)
 
 suppressPackageStartupMessages({
   library(optparse)
@@ -24,12 +15,12 @@ suppressPackageStartupMessages({
   library(ggplot2)
   library(scales)
   library(tools)
-  library(grid)        # unit() for legend guide
-  library(patchwork)   # panels
+  library(grid)
+  library(patchwork)
   library(sf)
 })
 
-# --------------------------- robust script path -------------------------------
+# Detect script location and project root
 .this_file <- function() {
   ca <- commandArgs(trailingOnly = FALSE)
   filearg <- grep("^--file=", ca, value = TRUE)
@@ -44,23 +35,23 @@ suppressPackageStartupMessages({
 if (!nzchar(.script)) .script <- "."
 .root   <- normalizePath(file.path(.script, ".."), winslash = "/", mustWork = FALSE)
 
-# --------------------------- project utilities --------------------------------
+# Load project utilities
 source(file.path(.root, "R", "utils_io.R"))
 source(file.path(.root, "R", "utils_repro.R"))
 
 `%||%` <- function(a,b) if (is.null(a)) b else a
 
-# --------------------------- CLI ----------------------------------------------
+# Command-line options
 opt_list <- list(
-  make_option(c("--run"),     type = "character", default = NULL,  help = "Run tag: A or B. If omitted, the script runs BOTH A and B."),
+  make_option(c("--run"),     type = "character", default = NULL,  help = "Run tag: A or B. If omitted, runs both A and B sequentially."),
   make_option(c("--mode"),    type = "character", default = NULL,  help = "REPRO or FAST (overrides config.yml)"),
   make_option(c("--species"), type = "character", default = NULL,  help = "Optional single dataset (e.g., E3A)"),
   make_option(c("--q"),       type = "double",    default = 0.75,  help = "Hotspot quantile (default 0.75)"),
-  make_option(c("--aoi"),     type = "character", default = "data/shp/HV20233.shp", help = "Optional AOI vector; set '' to disable")
+  make_option(c("--aoi"),     type = "character", default = "data/shp/HV20233.shp", help = "Optional AOI shapefile; set '' to disable")
 )
 opts <- parse_args(OptionParser(option_list = opt_list))
 
-# --- Self-invocation when --run is omitted ------------------------------------
+# Auto-run both A and B if --run not specified
 if (is.null(opts$run)) {
   message("[INFO] No --run provided; running both A and B sequentially.")
   

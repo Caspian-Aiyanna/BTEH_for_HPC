@@ -1,8 +1,9 @@
-# ============================================================================
-# Purpose: Optimized training pipeline — modular, resumable, deterministic in
-#          REPRO mode; FAST mode uses all cores minus 2. Reads thinned points
-#          from data/occ/thinned_DBSCAN/*.csv and saves to results/H2O/<RUN>/<SP>/.
-# ============================================================================
+# H2O AutoML Training Pipeline
+# Trains H2O machine learning models for habitat suitability prediction
+# Uses spatially-thinned occurrence data and environmental layers
+# Supports both REPRO (deterministic) and FAST (parallel) execution modes
+# Input:  data/occ/thinned_DBSCAN/<SPECIES>.csv
+# Output: results/H2O/<RUN>/<SPECIES>/
 
 suppressPackageStartupMessages({
   library(optparse)
@@ -14,7 +15,7 @@ suppressPackageStartupMessages({
   library(tidyr)
 })
 
-# --- robust sourcing regardless of CWD ---
+# Detect script location and project root
 .this_file <- function() {
   args <- commandArgs(trailingOnly = FALSE)
   filearg <- grep("^--file=", args, value = TRUE)
@@ -23,7 +24,7 @@ suppressPackageStartupMessages({
     fi <- tryCatch(normalizePath(sys.frames()[[1]]$ofile), error = function(e) NA_character_)
     if (!is.na(fi)) return(fi)
   }
-  stop("Cannot determine script path; run via Rscript or setwd() to project root.")
+  stop("Cannot determine script path. Run via Rscript or set working directory to project root.")
 }
 .script <- dirname(.this_file())
 .root   <- normalizePath(file.path(.script, ".."), winslash = "/", mustWork = TRUE)
@@ -33,9 +34,9 @@ source(file.path(.root, "R", "utils_repro.R"))
 source(file.path(.root, "R", "utils_kendall.R"))
 source(file.path(.root, "R", "utils_h2o.R"))
 
-`%||%` <- get0("%||%", ifnotfound = function(a, b) if (is.null(a)) b else a)  # safety if not in utils
+`%||%` <- get0("%||%", ifnotfound = function(a, b) if (is.null(a)) b else a)
 
-# --- CLI ---
+# Command-line options
 opt <- list(
   make_option(c("--run"),              type = "character", default = "A",   help = "Run tag: A or B [default: %default]"),
   make_option(c("--mode"),             type = "character", default = "REPRO",  help = "REPRO or FAST (overrides config.yml)"),
@@ -45,7 +46,7 @@ opt <- list(
 )
 opts <- parse_args(OptionParser(option_list = opt))
 
-# --- normalize & validate --run so downstream never guesses B ---
+# Validate run parameter
 opts$run <- toupper({
   x <- opts$run
   if (is.null(x) || is.na(x) || !nzchar(x)) "A" else x
@@ -57,7 +58,7 @@ cfg <- read_config()
 if (!is.null(opts$mode)) cfg$mode <- toupper(opts$mode)
 mode <- set_mode(cfg)
 
-# --- paths ---
+# Set up directories
 occ_dir   <- cfg$paths$occ %||% file.path("data", "occ", "thinned_DBSCAN")
 res_root  <- cfg$paths$results_h2o %||% file.path("results", "H2O")
 plans_dir <- cfg$paths$plans       %||% "plans"
@@ -67,7 +68,7 @@ dir_ensure(res_root); dir_ensure(plans_dir); dir_ensure(logs_dir)
 logf <- file.path(logs_dir, sprintf("03_h2o_train_%s.log", opts$run))
 log_line(sprintf("Starting 03_h2o_train.R  (mode=%s, run=%s)", mode, opts$run), logf)
 
-# --- choose raster dir by run tag (no silent fallbacks) ---
+# Load environmental rasters
 env_dir <- if (opts$run == "A") {
   cfg$paths$envi_after %||% file.path("data","envi","A")
 } else {
@@ -80,7 +81,7 @@ if (length(ras_files) == 0L) stop("No .tif in ", env_dir, " (run=", opts$run, ")
 ras_names <- make.names(tools::file_path_sans_ext(basename(ras_files)), unique = TRUE)
 Renv <- terra::rast(ras_files); names(Renv) <- ras_names
 
-# --- Kendall plan (read or create once per run) ---
+# Variable selection using Kendall correlation
 keepvars_csv <- file.path(plans_dir, opts$run, "keepvars.csv")
 if (file.exists(keepvars_csv)) {
   keep_vars <- readr::read_csv(keepvars_csv, show_col_types = FALSE)$variable
@@ -98,11 +99,11 @@ if (file.exists(keepvars_csv)) {
 }
 Renv <- Renv[[keep_vars]]
 
-# --- H2O init with proper threads ---
+# Initialize H2O
 threads <- init_h2o(cfg)  # from utils_h2o.R
 log_line(sprintf("H2O threads: %d", threads), logf)
 
-# --- AutoML settings from config ---
+# Configure AutoML parameters
 auto_seed <- cfg$h2o$seed %||% 123L
 if (toupper(cfg$mode) == "REPRO") {
   include_algos <- cfg$h2o$automl$include_algos_repro %||% c("GBM","DRF")
@@ -116,7 +117,7 @@ if (toupper(cfg$mode) == "REPRO") {
 }
 max_runtime_secs <- opts$max_runtime_secs %||% 120L  # small default budget for smoke tests
 
-# --- deterministic fold generator (spatial blocks) ---
+# Create spatial cross-validation folds
 make_spatial_folds <- function(df, block_km = 2.5, k = 5L) {
   rngx <- range(df$lon); rngy <- range(df$lat)
   step <- block_km / 111
@@ -130,7 +131,7 @@ make_spatial_folds <- function(df, block_km = 2.5, k = 5L) {
   df
 }
 
-# --- helper: drop zero-variance predictors ---
+# Drop zero-variance predictors
 drop_nzv <- function(df, cols) {
   keep <- vapply(cols, function(cl) {
     v <- df[[cl]]
@@ -140,7 +141,7 @@ drop_nzv <- function(df, cols) {
   cols[keep]
 }
 
-# --- species list ---
+# Get list of species to process
 occ_files <- list.files(occ_dir, pattern = "\\.csv$", full.names = TRUE)
 stopifnot(length(occ_files) > 0)
 sp_list <- sort(tools::file_path_sans_ext(basename(occ_files)))
@@ -150,7 +151,7 @@ if (!is.null(opts$species)) {
 }
 log_line(sprintf("Species to run (%d): %s", length(sp_list), paste(sp_list, collapse = ", ")), logf)
 
-# ------------------ main loop ------------------
+# Train models for each species
 for (sp in sp_list) {
   sp_csv <- file.path(occ_dir, paste0(sp, ".csv"))
   if (!file.exists(sp_csv)) {
@@ -161,7 +162,7 @@ for (sp in sp_list) {
   out_dir <- file.path(res_root, opts$run, sp)
   dir_ensure(out_dir)
 
-  # Resume guard
+  # Skip if already completed
   if (skip_if_done(out_dir, c("leader_model.txt", "metrics_in_sample.csv"))) {
     log_line(sprintf("Skip %s — outputs present", sp), logf)
     next
@@ -169,11 +170,11 @@ for (sp in sp_list) {
 
   log_line(sprintf("Training %s", sp), logf)
 
-  # ---- per-species body ----
+  # Load occurrence data
   sp_df <- readr::read_csv(sp_csv, show_col_types = FALSE)
   stopifnot(all(c("lon","lat") %in% names(sp_df)))
 
-  # Presence/absence with deterministic background
+  # Generate presence and background points
   pres <- sp_df %>% dplyr::select(lon, lat) %>% dplyr::mutate(pa = 1L)
   sp_hash <- sum(utf8ToInt(as.character(sp))) %% 10000L
   set.seed( (cfg$seeds$bg_base %||% 21000L) + sp_hash )
@@ -183,16 +184,16 @@ for (sp in sp_list) {
   bg_df  <- data.frame(lon = bg_xy[,1], lat = bg_xy[,2], pa = 0L)
   df_sp  <- dplyr::bind_rows(pres, bg_df)
 
-  # Extract predictors (drop NAs)
+  # Extract environmental predictors
   pts  <- terra::vect(df_sp, geom = c("lon","lat"), crs = terra::crs(Renv))
   vals <- terra::extract(Renv, pts)[,-1, drop = FALSE]
   df   <- dplyr::bind_cols(df_sp, as.data.frame(vals)) %>% tidyr::drop_na()
 
-  # Predictors intersection + NZV filter
+  # Filter predictors
   x_vars <- intersect(keep_vars, names(df))
   x_vars <- drop_nzv(df, x_vars)
 
-  # Guardrails
+  # Data quality checks
   n_min  <- 50L
   cls_tab <- table(df$pa)
   if (nrow(df) < n_min) {
@@ -209,15 +210,15 @@ for (sp in sp_list) {
     next
   }
 
-  # Spatial folds (deterministic grid blocks)
+  # Create spatial folds for cross-validation
   df <- make_spatial_folds(df,
                            block_km = cfg$spatial_cv$block_km %||% 2.5,
                            k        = cfg$spatial_cv$folds     %||% 5L)
 
-  # H2O frames
+  # Convert to H2O format
   hf <- as.h2o(df); hf["pa"] <- as.factor(hf[["pa"]])
 
-  # --- AutoML with safe fallback ---
+  # Train H2O AutoML model
   aml <- tryCatch(
     h2o.automl(
       x = x_vars, y = "pa",
@@ -247,7 +248,7 @@ for (sp in sp_list) {
     log_line(sprintf("AutoML returned NULL for %s — switching to fallback GBM.", sp), logf)
   }
 
-  # Fallback: simple GBM (guarantees a model)
+  # Fallback to simple GBM if AutoML fails
   if (is.null(leader)) {
     leader <- h2o.gbm(
       x = x_vars, y = "pa",
@@ -261,7 +262,7 @@ for (sp in sp_list) {
     )
   }
 
-  # Save leader model + info
+  # Save model and metadata
   h2o.saveModel(leader, path = out_dir, force = TRUE)
   writeLines(c(
     paste0("leader_id=", leader@model_id),
@@ -270,7 +271,7 @@ for (sp in sp_list) {
     paste0("mode=", mode)
   ), file.path(out_dir, "leader_model.txt"))
 
-  # In-sample performance (reference)
+  # Calculate performance metrics
   perf <- h2o.performance(leader, newdata = hf)
   ins  <- data.frame(
     dataset = sp,
@@ -280,7 +281,7 @@ for (sp in sp_list) {
   )
   readr::write_csv(ins, file.path(out_dir, "metrics_in_sample.csv"))
 
-  # Variable importance (if available)
+  # Save variable importance
   varimp <- tryCatch(as.data.frame(h2o.varimp(leader)), error = function(e) NULL)
   if (!is.null(varimp) && nrow(varimp) > 0) {
     readr::write_csv(varimp, file.path(out_dir, sprintf("varimp_%s.csv", sp)))
@@ -289,13 +290,13 @@ for (sp in sp_list) {
     })
   }
 
-  # Partial dependence for first few variables
+  # Generate partial dependence plots
   pp_vars <- head(x_vars, 5)
   suppressWarnings({
     pdf(file.path(out_dir, sprintf("partial_%s.pdf", sp))); print(h2o.partialPlot(object = leader, data = hf, cols = pp_vars)); dev.off()
   })
 
-  # Raster prediction (chunked)
+  # Generate prediction raster
   pred_r <- predict_raster_h2o(Renv[[x_vars]], leader, block_rows = 50000)
   terra::writeRaster(pred_r, filename = file.path(out_dir, sprintf("prediction_%s.tif", sp)), overwrite = TRUE)
 

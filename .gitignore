@@ -3,7 +3,7 @@ logs/*
 !logs/.gitkeep
 
 # Large results and intermediates
-results/
+# results/
 data/envi/raw/
 
 # R temporary / local files
